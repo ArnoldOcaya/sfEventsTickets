@@ -2,18 +2,93 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Eventify{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link href="{{ asset('styles/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('styles/app.css') }}" rel="stylesheet">
+            <link href="{{ asset('styles/main.js') }}" rel="stylesheet">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {{render(controller('App\\Controller\\EventController::searchBar'))}}
+            {{render(controller('App\\Controller\\TicketController::ticket'))}}
+        {% endblock %}
     </body>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script src="{{ asset('styles/main.js') }}"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Function to show additional inputs based on selected payment option
+                    function showAdditionalInputs() {
+                        // Hide all additional input fields
+                        var additionalInputs = document.querySelectorAll('.additional-inputs');
+                        additionalInputs.forEach(function (input) {
+                            input.style.display = 'none';
+                        });
+
+                        // Show additional input fields based on the selected payment option
+                        var selectedPayment = document.querySelector('input[name="payment"]:checked');
+                        if (selectedPayment) {
+                            var selectedInputs = document.getElementById(selectedPayment.value + '-details');
+                            if (selectedInputs) {
+                                selectedInputs.style.display = 'block';
+                                // Enable the initiate payment button
+                                document.getElementById('initiate-payment').disabled = false;
+                            }
+                        }
+                    }
+
+                    // Add event listener to radio buttons
+                    var radioButtons = document.querySelectorAll('input[name="payment"]');
+                    radioButtons.forEach(function (radioButton) {
+                        radioButton.addEventListener('change', showAdditionalInputs);
+                    });
+
+                    // Call the showAdditionalInputs function initially to hide the fields
+                    showAdditionalInputs();
+
+                    // Add event listener to the initiate payment button
+                    document.getElementById('initiate-payment').addEventListener('click', function () {
+                        alert('Payment process initiated!');
+                    });
+                });
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Get the dropdown trigger element
+                    var dropdownTrigger = document.querySelector('.nav-link.dropdown-toggle');
+
+                    // Get the dropdown menu element
+                    var dropdownMenu = document.querySelector('.dropdown-menu');
+
+                    // Function to show the dropdown menu
+                    function showDropdownMenu() {
+                        dropdownMenu.classList.add('show');
+                    }
+
+                    // Function to hide the dropdown menu
+                    function hideDropdownMenu() {
+                        dropdownMenu.classList.remove('show');
+                    }
+
+                    // Add event listener for mouseenter to show the dropdown menu
+                    dropdownTrigger.addEventListener('mouseenter', showDropdownMenu);
+
+                    // Add event listener for mouseleave to hide the dropdown menu
+                    dropdownTrigger.addEventListener('mouseleave', hideDropdownMenu);
+
+                    // Add event listener for mouseenter on the dropdown menu to keep it open
+                    dropdownMenu.addEventListener('mouseenter', showDropdownMenu);
+
+                    // Add event listener for mouseleave on the dropdown menu to hide it
+                    dropdownMenu.addEventListener('mouseleave', hideDropdownMenu);
+                });
+            </script>
+        {% endblock %}
 </html>

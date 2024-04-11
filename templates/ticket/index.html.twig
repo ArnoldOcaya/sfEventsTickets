@@ -1,0 +1,287 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eventify{% endblock %}
+
+{% block body %}
+    <div class="container-xxl bg-white p-0">
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="text-primary m-0"><i class="fa fa-ticket me-3"></i>Eventify</h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0 pe-4">
+                        <a href="/" class="nav-item nav-link">Home</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Services</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="#" class="dropdown-item">Reservation</a>
+                                <a href="/contact" class="dropdown-item">Contact Us</a>
+                            </div>
+                        </div>
+                        <a href="/event" class="nav-item nav-link">Events</a>
+                    </div>
+                    <a href="#" class="btn nav-link nav-item">SignIn</a>
+                    <a href="/" class="btn btn-primary py-2 px-4">Sign-Up</a>
+                </div>
+            </nav>
+
+            <div class="container-xxl py-5 bg-dark hero-header mb-5">
+                <div class="container text-center my-5 pt-5 pb-4">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Purchase Ticket</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Services</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Purchase Ticket</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+
+        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+            <section class="section container center">
+                <div class="col-md-6 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Event Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ticket in tickets %}
+                                <tr>
+                                    <td>{{ ticket.id }}</td>
+                                    <td>
+                                        {% if eventDetails[ticket.id] is defined %}
+                                            <p>Event Title: {{ eventDetails[ticket.id].title }}</p>
+                                            <p>Event Date: {{ eventDetails[ticket.id].date }}</p>
+                                            <!-- Add more event details as needed -->
+                                        {% else %}
+                                            <p>No event details available</p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="container-xxl py-5 px-0 wow fadeInUp" data-wow-delay="0.1s">
+            <section class='section container center'>
+                <div class="col-md-6 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Get A Ticket</h5>
+                        <h1 class="text-white mb-4">Purchase A Ticket</h1>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <label for="name">Your Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                        <label for="email">Your Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating date" id="date3" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" id="datetime"
+                                            placeholder="Date & Time" data-target="#date3"
+                                            data-toggle="datetimepicker" />
+                                        <label for="datetime">Date & Time</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="select1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        <label for="select1">No Of Tickets</label>
+                                    </div>
+                                </div>
+                                <div class="row g-3 payment-options rounded">
+                                    <div class="col payment-option bank">
+                                        <input type="radio" id="bank" name="payment" value="bank">
+                                        <label for="bank"><i class="fas fa-university"></i> Bank Transfer</label>
+                                    </div>
+                                    <div class="col payment-option mobile-money">
+                                        <input type="radio" id="mobile-money" name="payment" value="mobile-money">
+                                        <label for="mobile-money"><i class="fas fa-mobile-alt"></i> Mobile Money</label>
+                                    </div>
+                                    <div class="col payment-option paypal">
+                                        <input type="radio" id="paypal" name="payment" value="paypal">
+                                        <label for="paypal"><i class="fab fa-paypal"></i> PayPal</label>
+                                    </div>
+
+                                    <!-- Additional inputs for each payment option -->
+                                    <div id="bank-details" class="additional-inputs row g-3">
+                                        <div class="col-md-12">
+                                            <div class="row mb-3">
+                                                <div class="col col-md-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Name on Card">
+                                                        <label for="name">Name on Card</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-md-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Credit Card Number">
+                                                        <label for="credit-card-number">Credit Card Number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" placeholder="Expiry">
+                                                        <label for="expiry">Expiry</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control" placeholder="CVV">
+                                                        <label for="cvv">CVV</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div id="mobile-money-details" class="additional-inputs">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <select class="form-select" id="select2">
+                                                            <option value="1">MTN</option>
+                                                            <option value="2">AIRTEL</option>
+                                                            <option value="3">LYCAMOBILE</option>
+                                                        </select>
+                                                        <label for="select2">Network</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Mobile Number">
+                                                        <label for="mobileNumber">Mobile Number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="paypal-details" class="additional-inputs">
+                                        <div class="col-md-12">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="paypalemail"
+                                                    placeholder="PayPal Email">
+                                                <label for="paypalemail">Your PayPal Email</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button to initiate the payment process -->
+                                    <button id="initiate-payment" class="initiate-button btn-primary w-80 py-2"
+                                        disabled>Initiate
+                                        Payment</button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </section>
+        </div>
+
+        <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 16:9 aspect ratio -->
+                        <div class="ratio ratio-16x9">
+                            <iframe class="embed-responsive-item" src="" id="video" allowfullscreen
+                                allowscriptaccess="always" allow="autoplay"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Reservation End -->
+
+
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">More</h4>
+                        <a class="btn btn-link" href="">About Us</a>
+                        <a class="btn btn-link" href="">Contact Us</a>
+                        <a class="btn btn-link" href="">Reservation</a>
+                        <a class="btn btn-link" href="">Privacy Policy</a>
+                        <a class="btn btn-link" href="">Terms & Condition</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Contact</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="container-xxl col-lg-3 col-md-6 service-item rounded">
+                        <h4 class="section-title ff-secondary text-start text-primary fw-normal mb-4">Newsletter</h4>
+                        <p>Sign up to get notified of any event near you</p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text"
+                                placeholder="Your email">
+                            <button type="button"
+                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    </div>
+{% endblock %}
