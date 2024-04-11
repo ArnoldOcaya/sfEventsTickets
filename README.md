@@ -1,4 +1,4 @@
-Project Name: Ticketing Platform
+Project Name: Online Cultural Events Ticket Booking Platform
 
 Description:
 The Ticketing Platform is a web application designed to facilitate the purchase of event tickets online. It allows users to browse available events, view event details, purchase tickets, and manage their bookings. This project is built using Symfony, a PHP web application framework.
