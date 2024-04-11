@@ -19,7 +19,7 @@ Bootstrap: Frontend framework for responsive design.
 JavaScript: Client-side scripting for dynamic behavior.
 
 Installation:
-Clone the repository: git clone https://github.com/username/ticketing-platform.git
+Clone the repository: git clone https://github.com/ArnoldOcaya/sfEventsTickets.git
 Install dependencies: composer install
 Configure the database connection in the .env file.
 Run migrations to create the database schema: php bin/console doctrine:migrations:migrate
